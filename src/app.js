@@ -16,6 +16,8 @@ var endLats=[];
 var endLons=[];
 var dists=[];
 var addressText;
+var ratingText;
+var nameText;
 
 var main = new UI.Card({
   title: 'PEBBLE PLACES',
@@ -70,7 +72,7 @@ var locationOptions = {
   timeout: 5000
 };
 
-var places_menu = new UI.Menu();
+
 
 main.show();
 id = navigator.geolocation.getCurrentPosition(locationSuccess, locationError, locationOptions);    
@@ -123,7 +125,7 @@ menu.on('select',function(e) {
 
 
 function displayMenu(menuItem) {
-  
+  var places_menu = new UI.Menu();
   if(menuItem.item.title == 'Food'){
     places_menu.section(0, {title: 'Nearby Food'});
 
@@ -161,7 +163,7 @@ function displayMenu(menuItem) {
   
   if(location_names.length === 0){
     
-    places_menu.item(0,0, {title: 'Nothing Nearby',subtitle: ':('});
+    places_menu.item(0,0, {title: 'Nothing Nearby', subtitle:':('});
     
   }
   
@@ -206,17 +208,21 @@ function getLocalPlaces(menuItem){
         open_now[x]=data.results[x].opening_hours.open_now;
       }
       else{
-        open_now[x]="no data";
+        open_now[x]="Unkown";
       }
       if(data.results[x].hasOwnProperty('rating')){
         ratings[x]=data.results[x].rating;
       }
       else{
-        ratings[x]="no data";
+        ratings[x]="?";
       }
       placeIDs[x]=data.results[x].place_id;
-      addresses[x]=data.results[x].vicinity;
-
+      if(data.results[x].hasOwnProperty('vicinity')){
+        addresses[x]=data.results[x].vicinity;
+      }
+      else{
+        ratings[x]="no data available";
+      }
       console.log(location_names[x]);
       console.log(open_now[x]);
       console.log(ratings[x]);      
@@ -246,26 +252,19 @@ places_menu.on('select',function(e) {
   info_window.add(rect);
   info_window.add(sep1);
   info_window.add(sep2);
-  info_window.show();
 
    var display_info = location_names[e.itemIndex];
-  
-   if (addresses[e.itemIndex] != 'no data'){
+      
+  addressText=addresses[e.itemIndex];
     
-    addressText=addresses[e.itemIndex];
-     //display_info += '\n' + addresses[e.itemIndex];
-    }
-  else{
-    addressText="No location data available";
-  }
-   var addressLayer= new UI.Text({ position: new Vector2(5, 70), size: new Vector2(125, 100) });
+  var addressLayer= new UI.Text({ position: new Vector2(5, 70), size: new Vector2(125, 100),color:"black",text:addressText,font: 'gothic-14-bold', });
    info_window.add(addressLayer);
   if (ratings[e.itemIndex] != 'no data'){
     
     display_info += '\nRating: ' + ratings[e.itemIndex] + '/5';
     
   }
-  
+    info_window.show();
   //info_card.body(location_names[e.itemIndex] + '\n' + addresses[e.itemIndex] + '\nRating: ' + ratings[e.itemIndex] + '/5');
   
 //   info_card.body(display_info);

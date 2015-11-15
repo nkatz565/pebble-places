@@ -119,28 +119,3 @@ function locationError(err) {
   console.log("search fail");
   console.log('location error (' + err.code + '): ' + err.message);
 }
-
-// ==========================================================================================
-// Part 2: Electric Boogaloo
-// ==========================================================================================
-
-// Call this function after data is retrieved
-function fixAddresses(){
-  
-  var zip;
-  var temp_address;
-  
-  for( var i = 0; i < addresses.length; i++){
-    
-    if (addresses[i].charCodeAt(0) < 60 ){
-      
-      zip = addresses[i].substring(0,5);
-      
-      temp_address = addresses[i].substring(6,addresses[i].length);
-      
-      addresses[i] = temp_address + ' ' + zip;
-      
-    }
-    
-  }
-}

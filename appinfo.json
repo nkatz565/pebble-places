@@ -29,6 +29,16 @@
                 "type": "font"
             },
             {
+                "file": "images/driving.png",
+                "name": "IMAGES_DRIVING_PNG",
+                "type": "png"
+            },
+            {
+                "file": "images/walking.png",
+                "name": "IMAGES_WALKING_PNG",
+                "type": "png"
+            },
+            {
                 "file": "images/education.png",
                 "name": "IMAGES_EDUCATION_PNG",
                 "type": "png"

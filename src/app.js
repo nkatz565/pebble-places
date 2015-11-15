@@ -182,14 +182,97 @@ function displayMenu(menuItem) {
     }
   
   }
+  places_menu.on('select',function(e) {
   
+  var info_window = new UI.Window({
+    action: {
+    up: 'images/walking.png',
+    down: 'images/driving.png'
+    },
+
+    clear:true
+  });
+  info_window.on('click', 'up', function() {
+    getDrivingInstructions("walking",e);
+  });
+  info_window.on('click', 'down', function() {
+    getDrivingInstructions("driving",e);
+  });
+  var rect = new UI.Rect({ size: new Vector2(144, 168) });
+  var sep1 = new UI.Rect({ position: new Vector2(0, 64), size: new Vector2(144, 2),borderColor:"black",backgroundColor:"black" });
+  var sep2 = new UI.Rect({ position: new Vector2(72, 0), size: new Vector2(2, 64),borderColor:"black",backgroundColor:"black" });
+
+  info_window.add(rect);
+  info_window.add(sep1);
+  info_window.add(sep2);
+
+  nameText = location_names[e.itemIndex];
+  var nameLayer= new UI.Text({ position: new Vector2(5, 5), size: new Vector2(65, 45),color:"black",text:nameText,font: 'gothic-14-bold',textOverflow:'ellipsis' });
+  info_window.add(nameLayer);
+    
+  addressText=addresses[e.itemIndex];
+    
+  var addressLayer= new UI.Text({ position: new Vector2(5, 70), size: new Vector2(105, 100),color:"black",text:addressText,font: 'gothic-14-bold' });
+   info_window.add(addressLayer);
+ 
+    
+   ratingText=ratings[e.itemIndex] + '/5';
+  var ratingsLayer= new UI.Text({ position: new Vector2(80, 12), size: new Vector2(30, 40),color:"black",text:ratingText,font: 'gothic-14-bold' });
+   info_window.add(ratingsLayer);
+
+  
+    info_window.show();
+  
+});
+
   places_menu.show();
   
   wait_screen.hide();
   
 }
 
+function drawDrivingWindow(){
+  var driving_direction_window = new UI.Window({});
+  var rect = new UI.Rect({ size: new Vector2(144, 168) });
+  
+  var directionIndex=0;
+  driving_direction_window.add(rect);
+  
+  var directionsLayer= new UI.Text({ position: new Vector2(5, 5), size: new Vector2(125, 120),color:"black",text:directions[directionIndex],font: 'gothic-18-bold' });
+  driving_direction_window.add(directionsLayer);
+  
+  var distanceLayer= new UI.Text({ position: new Vector2(5, 130), size: new Vector2(110, 15),color:"black",text:"dist: "+dists[directionIndex],font: 'gothic-18-bold' });
+  driving_direction_window.add(distanceLayer);
+  
+  var stepLayer= new UI.Text({ position: new Vector2(115, 130), size: new Vector2(30, 15),color:"black",text:(directionIndex+1)+'/'+(directions.length),font: 'gothic-14-bold' });
+  driving_direction_window.add(stepLayer);
+  
+  driving_direction_window.on('click', 'up', function() {
+    if(directionIndex!==0){
+      directionIndex--;
+    }
+    directionsLayer.text(directions[directionIndex]);
+    distanceLayer.text("dist: "+dists[directionIndex]);
+    stepLayer.text((directionIndex+1)+'/'+(directions.length));
+    console.log("previous direction");
+
+  });
+  driving_direction_window.on('click', 'down', function() {
+    if(directionIndex!==directions.length-1){
+      directionIndex++;
+    }
+    directionsLayer.text(directions[directionIndex]);
+    distanceLayer.text("dist: "+dists[directionIndex]);
+    stepLayer.text((directionIndex+1)+'/'+(directions.length));
+    console.log("next direction");
+  });
+  
+  driving_direction_window.show();
+}
+
+
 function getLocalPlaces(menuItem){
+  wait_screen.show();
   ajax(
   {
     url:'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+lat+","+lon+'&radius=500&types='+search_queries[menuItem.itemIndex]+'&key=AIzaSyBb4_xUiYMw5swIGMZghCRdJYnZazdIhK4',
@@ -230,7 +313,7 @@ function getLocalPlaces(menuItem){
       console.log(addresses[x]);      
 
     }
-    
+    wait_screen.hide();
     displayMenu(menuItem);
     
   },
@@ -240,44 +323,12 @@ function getLocalPlaces(menuItem){
   );
 }
 
-places_menu.on('select',function(e) {
-  
-  var info_window = new UI.Window({
-    clear:true
-  });
-  var rect = new UI.Rect({ size: new Vector2(144, 168) });
-  var sep1 = new UI.Rect({ position: new Vector2(0, 64), size: new Vector2(144, 2),borderColor:"black",backgroundColor:"black" });
-  var sep2 = new UI.Rect({ position: new Vector2(89, 0), size: new Vector2(2, 64),borderColor:"black",backgroundColor:"black" });
 
-  info_window.add(rect);
-  info_window.add(sep1);
-  info_window.add(sep2);
-
-   var display_info = location_names[e.itemIndex];
-      
-  addressText=addresses[e.itemIndex];
-    
-  var addressLayer= new UI.Text({ position: new Vector2(5, 70), size: new Vector2(125, 100),color:"black",text:addressText,font: 'gothic-14-bold', });
-   info_window.add(addressLayer);
-  if (ratings[e.itemIndex] != 'no data'){
-    
-    display_info += '\nRating: ' + ratings[e.itemIndex] + '/5';
-    
-  }
-    info_window.show();
-  //info_card.body(location_names[e.itemIndex] + '\n' + addresses[e.itemIndex] + '\nRating: ' + ratings[e.itemIndex] + '/5');
-  
-//   info_card.body(display_info);
-
-  
-//   info_card.show();
-  
-});
-
-function getDrivingInstructions(){
+function getDrivingInstructions(mode,e){
+  wait_screen.show();
    ajax(
   {
-    url:'https://maps.googleapis.com/maps/api/directions/json?origin='+lat+','+lon+'&destination=place_id:'+placeIDs[0]+'&mode=walking&key=AIzaSyBb4_xUiYMw5swIGMZghCRdJYnZazdIhK4',
+    url:'https://maps.googleapis.com/maps/api/directions/json?origin='+lat+','+lon+'&destination=place_id:'+placeIDs[e.itemIndex]+'&mode='+mode+'&key=AIzaSyBb4_xUiYMw5swIGMZghCRdJYnZazdIhK4',
     type:'json'
   },
   function(data) {
@@ -297,6 +348,8 @@ function getDrivingInstructions(){
       console.log(endLons[x]);
       console.log(dists[x]);
     }
+    wait_screen.hide();
+    drawDrivingWindow(e);
     },
   function(error) {
     console.log('Download failed: ' + lat +" "+lon+ " "+placeIDs[0]);

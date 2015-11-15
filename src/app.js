@@ -129,7 +129,11 @@ menu.on('select',function(e) {
 
 
 function displayMenu(menuItem) {
+  
+  fixAddresses();
+  
   var places_menu = new UI.Menu();
+  
   if(menuItem.item.title == 'Food'){
     places_menu.section(0, {title: 'Nearby Food'});
 
@@ -373,4 +377,24 @@ function locationSuccessCont(pos) {
 
 function locationErrorCont(err) {
   console.log('location error (' + err.code + '): ' + err.message);
+}
+
+function fixAddresses(){
+  
+  var zip;
+  var temp_address;
+  
+  for( var i = 0; i < addresses.length; i++){
+    
+    if (addresses[i].charCodeAt(0) < 60 ){
+      
+      zip = addresses[i].substring(0,5);
+      
+      temp_address = addresses[i].substring(6,addresses[i].length);
+      
+      addresses[i] = temp_address + ' ' + zip;
+      
+    }
+    
+  }
 }

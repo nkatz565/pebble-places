@@ -29,23 +29,23 @@
                 "type": "font"
             },
             {
-                "file": "images/driving.png",
-                "name": "IMAGES_DRIVING_PNG",
-                "type": "png"
-            },
-            {
                 "file": "images/walking.png",
                 "name": "IMAGES_WALKING_PNG",
                 "type": "png"
             },
             {
-                "file": "images/education.png",
-                "name": "IMAGES_EDUCATION_PNG",
+                "file": "images/transportation.png",
+                "name": "IMAGES_TRANSPORTATION_PNG",
                 "type": "png"
             },
             {
-                "file": "images/entertainment.png",
-                "name": "IMAGES_ENTERTAINMENT_PNG",
+                "file": "images/shopping.png",
+                "name": "IMAGES_SHOPPING_PNG",
+                "type": "png"
+            },
+            {
+                "file": "images/health.png",
+                "name": "IMAGES_HEALTH_PNG",
                 "type": "png"
             },
             {
@@ -55,18 +55,18 @@
                 "type": "png"
             },
             {
-                "file": "images/shopping.png",
-                "name": "IMAGES_SHOPPING_PNG",
+                "file": "images/entertainment.png",
+                "name": "IMAGES_ENTERTAINMENT_PNG",
                 "type": "png"
             },
             {
-                "file": "images/transportation.png",
-                "name": "IMAGES_TRANSPORTATION_PNG",
+                "file": "images/education.png",
+                "name": "IMAGES_EDUCATION_PNG",
                 "type": "png"
             },
             {
-                "file": "images/health.png",
-                "name": "IMAGES_HEALTH_PNG",
+                "file": "images/driving.png",
+                "name": "IMAGES_DRIVING_PNG",
                 "type": "png"
             }
         ]

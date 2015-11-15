@@ -119,3 +119,4 @@ function locationError(err) {
   console.log("search fail");
   console.log('location error (' + err.code + '): ' + err.message);
 }
+

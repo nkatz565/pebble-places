@@ -18,6 +18,8 @@ var dists=[];
 var addressText;
 var ratingText;
 var nameText;
+var directionIndex=0;
+
 
 var main = new UI.Card({
   title: 'PEBBLE PLACES',
@@ -32,6 +34,12 @@ var search_queries = [
   'aquarium|book_store|library|museum|school|university|zoo',
   'beauty_salon|dentist|doctor|hair_care|hospital|pharmacy|physiotherapist|spa|veterinary_care'
   ];
+
+var locationOptionsCont = {
+  enableHighAccuracy: true, 
+  maximumAge: 0, 
+  timeout: 5000
+};
 
 var categories = {
   
@@ -106,10 +114,6 @@ function locationError(err) {
   console.log("search fail");
   console.log('location error (' + err.code + '): ' + err.message);
 }
-
-Pebble.addEventListener('ready',function(e){
-  console.log('AYYYYYYYYYYYYYYYYYYY');
-});
 
 var wait_screen = new UI.Card({body: 'Loading...'});
 
@@ -193,9 +197,11 @@ function displayMenu(menuItem) {
     clear:true
   });
   info_window.on('click', 'up', function() {
+    info_window.hide();
     getDrivingInstructions("walking",e);
   });
   info_window.on('click', 'down', function() {
+    info_window.hide();
     getDrivingInstructions("driving",e);
   });
   var rect = new UI.Rect({ size: new Vector2(144, 168) });
@@ -234,8 +240,7 @@ function displayMenu(menuItem) {
 function drawDrivingWindow(){
   var driving_direction_window = new UI.Window({});
   var rect = new UI.Rect({ size: new Vector2(144, 168) });
-  
-  var directionIndex=0;
+  directionIndex=0;
   driving_direction_window.add(rect);
   
   var directionsLayer= new UI.Text({ position: new Vector2(5, 5), size: new Vector2(125, 120),color:"black",text:directions[directionIndex],font: 'gothic-18-bold' });
@@ -268,6 +273,7 @@ function drawDrivingWindow(){
   });
   
   driving_direction_window.show();
+  id = navigator.geolocation.watchPosition(locationSuccessCont, locationErrorCont, locationOptionsCont);
 }
 
 
@@ -355,4 +361,16 @@ function getDrivingInstructions(mode,e){
     console.log('Download failed: ' + lat +" "+lon+ " "+placeIDs[0]);
   }
   );
+}
+
+
+
+function locationSuccessCont(pos) {
+  console.log('Location changed!');
+  console.log('lat= ' + pos.coords.latitude + ' lon= ' + pos.coords.longitude);
+  console.log("test"+endLons[directionIndex]);
+}
+
+function locationErrorCont(err) {
+  console.log('location error (' + err.code + '): ' + err.message);
 }

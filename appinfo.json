@@ -1,17 +1,15 @@
 {
     "appKeys": {},
     "capabilities": [
-        "location",
-        "configurable"
+        "location"
     ],
-    "companyName": "n-katz@hotmail.com",
+    "companyName": "ryan.p.malon@gmail.com",
     "longName": "Places",
     "projectType": "pebblejs",
     "resources": {
         "media": [
             {
                 "file": "images/menu_icon.png",
-                "menuIcon": true,
                 "name": "IMAGE_MENU_ICON",
                 "type": "png"
             },
@@ -29,6 +27,37 @@
                 "file": "fonts/UbuntuMono-Regular.ttf",
                 "name": "MONO_FONT_14",
                 "type": "font"
+            },
+            {
+                "file": "images/education.png",
+                "name": "IMAGES_EDUCATION_PNG",
+                "type": "png"
+            },
+            {
+                "file": "images/entertainment.png",
+                "name": "IMAGES_ENTERTAINMENT_PNG",
+                "type": "png"
+            },
+            {
+                "file": "images/food.png",
+                "menuIcon": true,
+                "name": "IMAGES_FOOD_PNG",
+                "type": "png"
+            },
+            {
+                "file": "images/shopping.png",
+                "name": "IMAGES_SHOPPING_PNG",
+                "type": "png"
+            },
+            {
+                "file": "images/transportation.png",
+                "name": "IMAGES_TRANSPORTATION_PNG",
+                "type": "png"
+            },
+            {
+                "file": "images/health.png",
+                "name": "IMAGES_HEALTH_PNG",
+                "type": "png"
             }
         ]
     },
@@ -38,7 +67,7 @@
         "aplite",
         "basalt"
     ],
-    "uuid": "1fb76f56-c9b1-498c-92aa-ff52485a2e43",
+    "uuid": "17355c48-bbc1-4ad6-a2e1-729c68caa287",
     "versionCode": 1,
     "versionLabel": "1.0",
     "watchapp": {

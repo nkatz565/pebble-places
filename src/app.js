@@ -21,10 +21,11 @@ var nameText;
 var directionIndex=0;
 
 
-var main = new UI.Card({
-  title: 'PEBBLE PLACES',
-  body: 'Waiting for location data'
+var main = new UI.Window({
+  
 });
+var splash= new UI.Image({position: new Vector2(0, 0), size: new Vector2(144, 168),image:'images/LOGO.png'});
+main.add(splash);
 
 var search_queries = [
   'food|bakery|bar|cafe|grocery_or_supermarket|meal_delivery|meal_takeaway|restaurant',
@@ -109,6 +110,9 @@ function locationSuccess(pos) {
 }
 
 function locationError(err) {
+  var failedLocation = new UI.Card({body: 'Could not determine location. Please ensure the gps is on and try again'});
+  failedLocation.show();
+  main.hide();
   console.log("search fail");
   console.log('location error (' + err.code + '): ' + err.message);
 }
@@ -325,7 +329,7 @@ function getLocalPlaces(menuItem){
     for(var i = 0; i < location_names.length; i++){
   
       if( open_now[i] == false){
-        
+        console.log("removed closed times");
         location_names.splice(i,1);
         open_now.splice(i,1);
         ratings.splice(i,1);

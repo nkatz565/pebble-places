@@ -29,6 +29,11 @@
                 "type": "font"
             },
             {
+                "file": "images/LOGO.png",
+                "name": "IMAGES_LOGO_PNG",
+                "type": "png"
+            },
+            {
                 "file": "images/walking.png",
                 "name": "IMAGES_WALKING_PNG",
                 "type": "png"

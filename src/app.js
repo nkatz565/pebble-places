@@ -80,8 +80,6 @@ var locationOptions = {
   timeout: 5000
 };
 
-
-
 main.show();
 id = navigator.geolocation.getCurrentPosition(locationSuccess, locationError, locationOptions);    
 
@@ -177,17 +175,17 @@ function displayMenu(menuItem) {
   
   else {
     
-    for(var i = 0; i < location_names.length; i++){
+     for(var i = 0; i < location_names.length; i++){
   
-      if(i == 10){
-  
-        break;
-  
-      }
-  
-      places_menu.item(0,i, {title: location_names[i]});
+       if(i == 10){
         
-    }
+         break;
+  
+       }
+       
+       places_menu.item(0,i, {title: location_names[i]});
+      
+     }
   
   }
   places_menu.on('select',function(e) {
@@ -297,7 +295,7 @@ function getLocalPlaces(menuItem){
     // Create an array of Menu items
     for(var x=0;x<data.results.length;x++){
       location_names[x]=data.results[x].name;
-      if(data.results[x].hasOwnProperty('opening_hours.open_now')){
+      if(data.results[x].hasOwnProperty('opening_hours')){
         open_now[x]=data.results[x].opening_hours.open_now;
       }
       else{
@@ -323,6 +321,21 @@ function getLocalPlaces(menuItem){
       console.log(addresses[x]);      
 
     }
+    
+    for(var i = 0; i < location_names.length; i++){
+  
+      if( open_now[i] == false){
+        
+        location_names.splice(i,1);
+        open_now.splice(i,1);
+        ratings.splice(i,1);
+        placeIDs.splice(i,1);
+        addresses.splice(i,1);
+        
+      }
+      
+    }
+    
     wait_screen.hide();
     displayMenu(menuItem);
     

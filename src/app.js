@@ -396,5 +396,15 @@ function fixAddresses(){
       
     }
     
+    if(addresses[i].search('#') != -1){
+      
+      temp_address = addresses[i].substring(addresses[i].indexOf('#')+1,addresses[i].indexOf(','));
+      
+      addresses[i] = temp_address + ' ' + addresses[i].replace('#' + temp_address,'');
+      
+    }
+    
+    addresses[i].trim();
+    
   }
 }

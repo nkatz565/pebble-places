@@ -12,7 +12,6 @@ var ratings=[];
 var placeIDs=[];
 var addresses=[];
 
-
 // Show splash screen while waiting for data
 var splashWindow = new UI.Window();
 
